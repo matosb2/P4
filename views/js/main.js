@@ -592,7 +592,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /** Calculate cols and rows based on browser window size.  This solved pizza row
    *  issue that was coming up on mobile because there wasn't enough rows in portrait
-   *  mobile position.
+   *  mobile position.  
+   *  Source: https://github.com/uncleoptimus/udacityP4/blob/gh-pages/views/js/main.js
    */
   cols = Math.ceil(window.innerWidth / (256 - 73.33));
   rows = Math.ceil(window.innerHeight / 256);

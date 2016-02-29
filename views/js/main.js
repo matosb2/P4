@@ -580,6 +580,7 @@ window.addEventListener('scroll', updatePositions);
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
+  var rows;
   var s = 256;
 
   /** Defined elem variable and it allowed me to prevent creating a new variable every time.
@@ -588,7 +589,16 @@ document.addEventListener('DOMContentLoaded', function() {
    */
   var elem;
   var movingPizzas = document.getElementById('movingPizzas1');
-  for (var i = 0; i < 30; i++) {
+
+  /** Calculate cols and rows based on browser window size.  This solved pizza row
+   *  issue that was coming up on mobile because there wasn't enough rows in portrait
+   *  mobile position.
+   */
+  cols = Math.ceil(window.innerWidth / (256 - 73.33));
+  rows = Math.ceil(window.innerHeight / 256);
+  totalPizzas = cols * rows;
+
+  for (var i = 0; i < totalPizzas; i++) {
     elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -598,5 +608,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     movingPizzas.appendChild(elem);
   }
+
   updatePositions();
 });

@@ -529,8 +529,8 @@ function updatePositions() {
 
   var pizzaLen = items.length;
 
-  for (var i = 0; i < pizzaLen; i++) {
-    items[i].style.left = items[i].basicLeft + 100 * phase[i % 5] + 'px';
+  for (var j = 0; j < pizzaLen; j++) {
+    items[j].style.left = items[j].basicLeft + 100 * phase[j % 5] + 'px';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -551,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
   var elem;
-  var movingPizzas = document.getElementById('movingPizzas1')
+  var movingPizzas = document.getElementById('movingPizzas1');
 
 
   for (var i = 0; i < 30; i++) {

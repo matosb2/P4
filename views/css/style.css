@@ -29,12 +29,15 @@ form {
   font-weight: 800;
 }
 
+/* Had decided to not use the transforms or will-change since performance*/
 .mover {
   position: fixed;
   width: 256px;
   z-index: -1;
-  will-change: transform;
+  -webkit-transform: translateZ(0);   
   transform: translateZ(0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 

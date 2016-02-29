@@ -29,7 +29,6 @@ form {
   font-weight: 800;
 }
 
-/* Had decided to not use the transforms or will-change since performance*/
 .mover {
   position: fixed;
   width: 256px;

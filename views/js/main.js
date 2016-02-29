@@ -399,6 +399,8 @@ var pizzaElementGenerator = function(i) {
 };
 
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
+/** This function is used in the HTML so I left it.
+ */
 var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
@@ -422,7 +424,9 @@ var resizePizzas = function(size) {
   changeSliderLabel(size);
 
    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx (elem, size) {
+   /** Disabled unused function.  It wasn't being used anywhere in this code.
+    */
+   /*function determineDx (elem, size) {
     var oldWidth = elem.offsetWidth;
     var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
     var oldSize = oldWidth / windowWidth;
@@ -446,10 +450,14 @@ var resizePizzas = function(size) {
     var dx = (newSize - oldSize) * windowWidth;
 
     return dx;
-  }
+  }*/
 
   // Iterates through pizza elements on the page and changes their widths
+  /** Optimized by removing unnecessary for loop and gained dramatic performance.
+   *  Added function to change between 3 different sizes: 25%, 33.3%, 50%
+   */
   function changePizzaSizes(size) {
+    var newWidth;
     switch(size) {
       case "1":
         newWidth = 25;
@@ -464,6 +472,12 @@ var resizePizzas = function(size) {
         console.log("bug in sizeSwitcher");
     }
 
+    /** Moved and changed randomPizzas definition to outside the for loop
+     *  and used getElementsByClassName instead of the querySelector for better
+     *  performance and so there aren't variables being created constantly every
+     *  time within the for loop.  Created and moved pizzaLen because it's easier 
+     *  to lookup one object than two.  Also serves for slightly better performance.
+     */
     var randomPizzas = document.getElementsByClassName('randomPizzaContainer');
     var pizzaLen = randomPizzas.length;
     for (var i = 0; i < pizzaLen; i++) {
@@ -512,16 +526,29 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
+/** Created frame variable and set it to 0 since that's where we want to start
+ *  and also because it would give us an undefined error if we didn't.  Made
+ *  sure that variables were located outside their relevant for loops so it
+ *  would not keep creating the same variables over and over again.
+ */
+
 var frame = 0;
-
-
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
+  /** Changed querySelector to getElements for better performance and 
+   *  created variable top so we would be able to just lookup one object rather than
+   *  3.
+   */
+
   var items = document.getElementsByClassName('mover');
   var top = document.body.scrollTop;
 
+  /** Pulled phase variable out of old for loop and created it outside of the loop
+   *  and also created a new for loop which did what the old for loop was trying to do
+   *  but better, neater.
+   */
   var phase = [];
   for (var i = 0; i < 5; i++) {
     phase.push(Math.sin((top / 1250) + i % 5)); 
@@ -529,8 +556,12 @@ function updatePositions() {
 
   var pizzaLen = items.length;
 
+  /** Optimized for loop the same way we did with the others:  Made sure no variables
+   *  were being created inside for loop, and used a formula that would determine the length
+   *  that each pizza would travel from the left to right animation.
+   */
   for (var j = 0; j < pizzaLen; j++) {
-    items[j].style.left = items[j].basicLeft + 100 * phase[j % 5] + 'px';
+    items[j].style.left = items[j].basicLeft + 100 * phase[(j % 5)] + 'px';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -550,10 +581,13 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+
+  /** Defined elem variable and it allowed me to prevent creating a new variable every time.
+   *  Also created variable movingPizzas and used getElements instead of querySelector, which
+   *  made appending much smoother and faster.
+   */
   var elem;
   var movingPizzas = document.getElementById('movingPizzas1');
-
-
   for (var i = 0; i < 30; i++) {
     elem = document.createElement('img');
     elem.className = 'mover';

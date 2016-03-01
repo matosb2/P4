@@ -43,7 +43,7 @@ task was to simply achieve a score of 90 or above in both mobile and Desktop.
     + Was going through the [Browser Rendering Optimization](https://www.udacity.com/course/viewer#!/c-ud860-nd/l-4147498575/e-4154208580/m-4142388616) course and this was one of the quizzes
 - Optimized updatePositions functioned which was causing much problems
 - Optimized the elements at the end of the file before updatePositions is called
-    + Optimized this from 200 pizzas to 30 at first but then it wasn't enough pizzas to fill a portrait display on mobile so changed to a calculation I found from someone else, that fit the pizzas to the browser's window's size
+    + Optimized this from 200 pizzas to 30 at first but then it wasn't enough pizzas to fill a portrait display on mobile so changed to a calculation I found from someone else (referenced below), that fit the pizzas to the browser's window's size
     + 200 pizzas was too much and was causing low framerates on scroll, probably the main culprit in this whole project
 - Fixed the css up on .mover so it would change all the paint going on into compositing which ultimately helped increase a bit of fps
 
